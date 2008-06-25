@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.ServiceModel;
 using System.Text;
+using System.ServiceModel.Channels;
 
 namespace NMemcached
 {
@@ -13,11 +14,11 @@ namespace NMemcached
 		private readonly BinaryFormatter formatter = new BinaryFormatter();
 		private readonly string[] urls;
 		private readonly Dictionary<string, Queue<IMemacache>> pool = new Dictionary<string, Queue<IMemacache>>();
-		private NetTcpBinding binding;
+		private readonly Binding binding;
 
-		public MemcachedClient(params string[] urls)
+		public MemcachedClient(Binding binding, params string[] urls)
 		{
-			binding = new NetTcpBinding(SecurityMode.None);
+			this.binding = binding;
 			this.urls = urls;
 			foreach (var url in urls)
 			{

@@ -22,7 +22,7 @@ namespace NMemcached.IntegrationTests
 				"MemcacheService");
 
 			server.Open();
-			client = new MemcachedClient(uriString + "MemcacheService");
+			client = new MemcachedClient(new NetTcpBinding(SecurityMode.None), uriString + "MemcacheService");
 		}
 
 		[TearDown]

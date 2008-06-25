@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ServiceModel;
 using System.Text;
 using System.Web.Caching;
 using NMemcached.Model;

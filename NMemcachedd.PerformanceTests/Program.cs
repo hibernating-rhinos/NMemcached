@@ -18,7 +18,8 @@ namespace NMemcachedd.PerformanceTests
 			var uriString = "net.tcp://localhost:33433/";
 			var server = new ServiceHost(typeof(MemcacheService),
 									 new Uri(uriString));
-			server.AddServiceEndpoint(typeof(IMemacache), new NetTcpBinding(SecurityMode.None),
+			var binding = new NetTcpBinding(SecurityMode.None, false);
+			server.AddServiceEndpoint(typeof(IMemacache), binding,
 				"MemcacheService");
 
 			server.Open();
@@ -27,7 +28,7 @@ namespace NMemcachedd.PerformanceTests
 			var count = 20;
 			for (int i = 0; i < count; i++)
 			{
-				var client = new MemcachedClient(uriString + "MemcacheService");
+				var client = new MemcachedClient(new NetTcpBinding(SecurityMode.None), uriString + "MemcacheService");
 				clients.Add(client);
 			}
 			const int interationCount = 10000;
@@ -44,7 +45,10 @@ namespace NMemcachedd.PerformanceTests
 						while (IncrementRead(reportCount) < interationCount)
 							client.Get("foo");
 						read.Set();
-					}).Start();
+					})
+					{
+						IsBackground = true
+					}.Start();
 				}
 				else
 				{
@@ -53,7 +57,10 @@ namespace NMemcachedd.PerformanceTests
 						while (IncrementWrites(reportCount) < interationCount)
 							client.Set("foo", "bar");
 						write.Set();
-					}).Start();
+					})
+					{
+						IsBackground = true
+					}.Start();
 				}
 			}
 			WaitHandle.WaitAll(new WaitHandle[] { read, write });
