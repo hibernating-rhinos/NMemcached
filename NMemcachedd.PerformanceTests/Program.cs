@@ -18,7 +18,7 @@ namespace NMemcachedd.PerformanceTests
 			var uriString = "net.tcp://localhost:33433/";
 			var server = new ServiceHost(typeof(MemcacheService),
 									 new Uri(uriString));
-			server.AddServiceEndpoint(typeof(IMemacache), new NetTcpBinding(),
+			server.AddServiceEndpoint(typeof(IMemacache), new NetTcpBinding(SecurityMode.None),
 				"MemcacheService");
 
 			server.Open();

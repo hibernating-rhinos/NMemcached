@@ -10,14 +10,14 @@ namespace NMemcached
 {
 	public class MemcachedClient
 	{
-		private readonly ChannelFactory<IMemacache> channelFactory;
 		private readonly BinaryFormatter formatter = new BinaryFormatter();
 		private readonly string[] urls;
 		private readonly Dictionary<string, Queue<IMemacache>> pool = new Dictionary<string, Queue<IMemacache>>();
+		private NetTcpBinding binding;
 
 		public MemcachedClient(params string[] urls)
 		{
-			channelFactory = new ChannelFactory<IMemacache>(new NetTcpBinding());
+			binding = new NetTcpBinding(SecurityMode.None);
 			this.urls = urls;
 			foreach (var url in urls)
 			{
@@ -318,7 +318,13 @@ namespace NMemcached
 			lock (queue)
 			{
 				if (queue.Count == 0)
-					return channelFactory.CreateChannel(new EndpointAddress(url));
+				{
+					var channel = ChannelFactory<IMemacache>.CreateChannel(
+						binding,
+						new EndpointAddress(url));
+					((ICommunicationObject)channel).Open();
+					return channel;
+				}
 				return queue.Dequeue();
 			}
 		}
