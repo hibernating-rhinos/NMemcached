@@ -6,7 +6,7 @@ namespace NMemcached.Model
 	{
 		private byte[] buffer;
 
-		public uint Flags;
+		public long Flags;
 		public string Key;
 		public long Timestamp;
 

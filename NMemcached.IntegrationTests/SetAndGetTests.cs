@@ -60,18 +60,23 @@ namespace NMemcached.IntegrationTests
 			set = client.Set("foo", "boo");
 			Assert.IsTrue(set);
 
-			object[] objects = client.Get(new []{"ayende","rahien","blar","foo"});
-			Assert.AreEqual("test", objects[0]);
-			Assert.AreEqual("test", objects[1]);
-			Assert.AreEqual("hlar", objects[2]);
-			Assert.AreEqual("boo", objects[3]);
+			var objects = client.Get("ayende","rahien","blar","foo");
+			Assert.AreEqual("test", objects[0].Value);
+			Assert.AreEqual("test", objects[1].Value);
+			Assert.AreEqual("hlar", objects[2].Value);
+			Assert.AreEqual("boo", objects[3].Value);
+
+			Assert.AreEqual("ayende", objects[0].Key);
+			Assert.AreEqual("rahien", objects[1].Key);
+			Assert.AreEqual("blar", objects[2].Key);
+			Assert.AreEqual("foo", objects[3].Key);
 		}
 
 		[Test]
 		public void Can_set_and_item_in_server()
 		{
 			client.Set("ayende", "test");
-			string cached = (string)client.Get("ayende");
+			var cached = (string)client.Get("ayende");
 			Assert.AreEqual("test", cached);
 		}
 
@@ -79,7 +84,7 @@ namespace NMemcached.IntegrationTests
 		public void Can_get_cas_value_from_server()
 		{
 			client.Set("ayende", "test");
-			ulong unique;
+			long unique;
 			client.Gets("ayende", out unique);
 			Assert.IsTrue(0 != unique);
 			

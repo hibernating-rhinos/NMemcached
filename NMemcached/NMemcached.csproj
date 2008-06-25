@@ -35,40 +35,27 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientConnection.cs" />
-    <Compile Include="Commands\Modifications\AbstractArithmeticOperation.cs" />
-    <Compile Include="Commands\AbstractCommand.cs" />
-    <Compile Include="Commands\Retrieval\AbstractRetrievalCommand.cs" />
-    <Compile Include="Commands\Storage\AddCommand.cs" />
-    <Compile Include="Commands\Storage\AppendCommand.cs" />
-    <Compile Include="Extensions\CommandExtensions.cs" />
-    <Compile Include="Util\BufferReader.cs" />
+    <Compile Include="ArithmeticResult.cs" />
+    <Compile Include="CachedValue.cs" />
+    <Compile Include="CacheOperationResult.cs" />
+    <Compile Include="IMemacache.cs" />
+    <Compile Include="MemcachedClient.cs" />
+    <Compile Include="MemcacheService.cs" />
     <Compile Include="Model\BlockOperationOnItemTag.cs" />
     <Compile Include="Model\CachedItem.cs" />
     <Compile Include="Util\CacheMixin.cs" />
-    <Compile Include="Commands\Storage\CasCommand.cs" />
-    <Compile Include="Commands\Modifications\DecrCommand.cs" />
-    <Compile Include="Commands\Storage\DeleteCommand.cs" />
-    <Compile Include="Commands\Misc\FlushAllCommand.cs" />
-    <Compile Include="Commands\Retrieval\GetCommand.cs" />
-    <Compile Include="Commands\Retrieval\GetsCommand.cs" />
-    <Compile Include="Commands\Modifications\IncrCommand.cs" />
-    <Compile Include="Commands\Storage\PrependCommand.cs" />
-    <Compile Include="Commands\Misc\QuitCommand.cs" />
-    <Compile Include="Commands\Storage\ReplaceCommand.cs" />
-    <Compile Include="Commands\Misc\VersionCommand.cs" />
-    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="SystemTime.cs" />
-    <Compile Include="Commands\Storage\AbstractStoreCommand.cs" />
-    <Compile Include="Commands\ICommand.cs" />
-    <Compile Include="Commands\Storage\SetCommand.cs" />
-    <Compile Include="MemcachedServer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Util\LineReader.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

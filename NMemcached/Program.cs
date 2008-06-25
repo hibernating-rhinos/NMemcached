@@ -8,8 +8,6 @@ namespace NMemcached
 	{
 		static void Main()
 		{
-			var server = new MemcachedServer(IPAddress.Any, 11211);
-			server.Start();
 			Thread.CurrentThread.Join();
 		}
 	}
